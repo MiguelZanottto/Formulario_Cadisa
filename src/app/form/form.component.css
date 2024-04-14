@@ -1,0 +1,92 @@
+.mat-stepper-vertical {
+    margin-top: 8px;
+  }
+
+  h2{
+    font-size: 25px
+  }
+  
+  .mat-mdc-form-field {
+    margin-top: 16px;
+  }
+
+  mat-form-field {
+    display: block;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  .button{
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .contenedor{
+    width: 600px;
+    margin: auto;
+    border-radius: 27px;
+    text-align: center;
+    background-color: #f5f5f5;
+    border: #f5f5f5 solid 3px;
+  }
+
+  mat-radio-button:hover {
+    background-color: rgb(133, 133, 55); 
+  }
+
+  mat-radio-button {
+    display: block;
+    border-radius: 30px;
+    border: 1px solid rgb(182, 182, 79);
+    background-color: rgb(201, 201, 87);
+    margin: auto;
+    padding: 2px;
+    cursor: pointer;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 175px;
+    text-align: left;
+  }
+
+  mat-radio-button span{
+    font-weight: 550;
+    font-size: medium;
+  }
+
+  .error {
+    display: none;
+    color: red;
+    font-weight: 500;
+    text-align: left;
+    margin-left: 50px;
+    margin-top: -10px;  
+}
+
+.error img{
+  width: 25px;
+  vertical-align: -6px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

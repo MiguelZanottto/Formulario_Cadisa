@@ -1,0 +1,440 @@
+<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear" style="display: none;">
+    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+</button>
+<mat-stepper style="background-color: rgb(54, 139, 184);" orientation="vertical" [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="DatosClienteForm">
+        <form [formGroup]="DatosClienteForm" (keydown)="limpiarErrores(DatosClienteForm)">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.- Cuentanos de ti</h2>
+                <mat-form-field>
+                    <mat-label>Nombre</mat-label>
+                    <input matInput id="nombre" placeholder="Juan" formControlName="nombre" required>
+                </mat-form-field>
+                <span id="error_nombre_required" class="error"><img src="./../../assets/img/advertencia.png"
+                        alt="alerta"> Rellena este campo</span>
+                <mat-form-field>
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput placeholder="Peréz" formControlName="apellidos" required>
+                </mat-form-field>
+                <span id="error_apellidos_required" class="error"><img src="./../../assets/img/advertencia.png"
+                        alt="alerta"> Rellena este campo</span>
+                <div style="display: flex; align-items: center;">
+                    <img style="float: left; width: 35px;margin-left: 50px;" src="../../assets/img/espana.png"
+                        alt="bandera_españa">
+                    <mat-form-field style="flex-grow: 1; margin-left: 5px;">
+                        <mat-label>Número de teléfono</mat-label>
+                        <input matInput placeholder="613389165" formControlName="telefono" required
+                            (keypress)="validarNumero($event)" maxlength="9" style="width: calc(100% - 60px);">
+                    </mat-form-field>
+                </div>
+                <span id="error_telefono_required" class="error"><img src="./../../assets/img/advertencia.png"
+                        alt="alerta"> Rellena este campo</span>
+                <span id="error_telefono_pattern" class="error"><img src="./../../assets/img/advertencia.png"
+                        alt="alerta"> El número de teléfono no es válido</span>
+                <mat-form-field>
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput placeholder="tucorreo@ejemplo.com" formControlName="correo" required>
+                </mat-form-field>
+                <span id="error_correo_required" class="error"><img src="./../../assets/img/advertencia.png"
+                        alt="alerta"> Rellena este campo</span>
+                <span id="error_correo_email" class="error"><img src="./../../assets/img/advertencia.png" alt="alerta">
+                    El email no es válido</span>
+                <div class="button">
+                    <button (click)="validarForm(DatosClienteForm);sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="numEstanciasClimatizarForm">
+        <form [formGroup]="numEstanciasClimatizarForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿Cuántas estancias quieres climatizar?
+                </h2>
+                <mat-radio-group formControlName="num_estancias">
+                    <mat-radio-button value="1"
+                        (click)="numEstanciasClimatizarForm.controls.num_estancias.setValue('1');limpiarErroresRadio(numEstanciasClimatizarForm);"><span>Una</span></mat-radio-button>
+                    <mat-radio-button value="2"
+                        (click)="numEstanciasClimatizarForm.controls.num_estancias.setValue('2');limpiarErroresRadio(numEstanciasClimatizarForm);"><span>Dos</span></mat-radio-button>
+                    <mat-radio-button value="3"
+                        (click)="numEstanciasClimatizarForm.controls.num_estancias.setValue('3');limpiarErroresRadio(numEstanciasClimatizarForm);"><span>Tres</span></mat-radio-button>
+                    <mat-radio-button value="4"
+                        (click)="numEstanciasClimatizarForm.controls.num_estancias.setValue('4');limpiarErroresRadio(numEstanciasClimatizarForm);"><span>Cuatro</span></mat-radio-button>
+                    <mat-radio-button value="5"
+                        (click)="numEstanciasClimatizarForm.controls.num_estancias.setValue('5 o más');limpiarErroresRadio(numEstanciasClimatizarForm);"><span>5
+                            o más</span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_num_estancias_required" style="margin-left: 0px; margin-top: 15px; text-align: center;"
+                    class="error"><img src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una
+                    opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button (click)="validarForm(numEstanciasClimatizarForm);sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="tipoViviendaForm">
+        <form [formGroup]="tipoViviendaForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿Qué tipo de vivienda es?</h2>
+                <mat-radio-group formControlName="tipo_vivienda">
+                    <mat-radio-button value="Piso"
+                        (click)="tipoViviendaForm.controls.tipo_vivienda.setValue('Piso');limpiarErroresRadio(tipoViviendaForm);"><span>Piso
+                            de 1 planta</span></mat-radio-button>
+                    <mat-radio-button value="Duplex"
+                        (click)="tipoViviendaForm.controls.tipo_vivienda.setValue('Duplex');limpiarErroresRadio(tipoViviendaForm);"><span>Duplex</span></mat-radio-button>
+                    <mat-radio-button value="Chalet"
+                        (click)="tipoViviendaForm.controls.tipo_vivienda.setValue('Chalet');limpiarErroresRadio(tipoViviendaForm);"><span>Casa/Chalet</span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_tipo_vivienda_required" style="margin-left: 0px; margin-top: 15px; text-align: center;"
+                    class="error"><img src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una
+                    opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button (click)="validarForm(tipoViviendaForm); sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="cambioEquipoForm">
+        <form [formGroup]="cambioEquipoForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿Es un cambio de equipo?</h2>
+                <mat-radio-group formControlName="cambio_equipo">
+                    <mat-radio-button value="Si"
+                        (click)="cambioEquipoForm.controls.cambio_equipo.setValue('Si');limpiarErroresRadio(cambioEquipoForm);"><span>Si</span></mat-radio-button>
+                    <mat-radio-button value="No"
+                        (click)="cambioEquipoForm.controls.cambio_equipo.setValue('No');limpiarErroresRadio(cambioEquipoForm);"><span>No</span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_cambio_equipo_required" style="margin-left: 0px; margin-top: 15px; text-align: center;"
+                    class="error"><img src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una
+                    opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button (click)="validarForm(cambioEquipoForm); sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+    @if(this.numEstanciasClimatizarForm.value.num_estancias === "1"){
+    <mat-step [stepControl]="superficieForm">
+        <form [formGroup]="superficieForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿Qué superficie tiene tu
+                    espacio?</h2>
+                <div style="margin: 10px;">
+                    <img src="../assets/img/superficie.png" width="100%" alt="foto">
+                </div>
+                <mat-radio-group formControlName="superficie">
+                    <mat-radio-button value="0-15"
+                        (click)="superficieForm.controls.superficie.setValue('0-15');limpiarErroresRadio(superficieForm);"><span>Hasta
+                            15 m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="15-20"
+                        (click)="superficieForm.controls.superficie.setValue('15-20');limpiarErroresRadio(superficieForm);"><span>15-20
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="20-25"
+                        (click)="superficieForm.controls.superficie.setValue('20-25');limpiarErroresRadio(superficieForm);"><span>20-25
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="25-30"
+                        (click)="superficieForm.controls.superficie.setValue('25-30');limpiarErroresRadio(superficieForm);"><span>25-30
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="30-35"
+                        (click)="superficieForm.controls.superficie.setValue('30-35');limpiarErroresRadio(superficieForm);"><span>30-35
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="35+"
+                        (click)="superficieForm.controls.superficie.setValue('35+');limpiarErroresRadio(superficieForm);"><span>Más
+                            de 35 m<sup>2</sup></span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_superficie_required" style="margin-left: 0px; margin-top: 15px; text-align: center;"
+                    class="error"><img src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una
+                    opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button (click)="validarForm(superficieForm); sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+
+    @if(this.tipoViviendaForm.value.tipo_vivienda === 'Piso') {
+    <mat-step [stepControl]="plantaForm">
+        <form [formGroup]="plantaForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿En que planta está?</h2>
+                <div style="margin: 10px;">
+                    <img src="../assets/img/planta.png" width="100%" alt="foto">
+                </div>
+                <mat-radio-group formControlName="planta">
+                    <mat-radio-button value="Planta Baja"
+                        (click)="plantaForm.controls.planta.setValue('Planta Baja');limpiarErroresRadio(plantaForm);"><span>Planta
+                            Baja</span></mat-radio-button>
+                    <mat-radio-button value="Entreplanta"
+                        (click)="plantaForm.controls.planta.setValue('Entreplanta');limpiarErroresRadio(plantaForm);"><span>Éntreplanta</span></mat-radio-button>
+                    <mat-radio-button value="Atico"
+                        (click)="plantaForm.controls.planta.setValue('Atico');limpiarErroresRadio(plantaForm);"><span>Ático</span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_planta_required" style="margin-left: 0px; margin-top: 15px; text-align: center;"
+                    class="error"><img src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una
+                    opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button (click)="validarForm(plantaForm); sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+    }
+    }@else {
+    @if(this.cambioEquipoForm.value.cambio_equipo === "Si"){
+    <mat-step [stepControl]="tipoInstalacionForm">
+        <form [formGroup]="tipoInstalacionForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿Que tipo de instalación tienes?</h2>
+                <p style="margin: 30px;">
+                    <span style="display: block;font-size: 110%;"><span style="font-weight: bold;">A) Multisplit 2x1:</span> Dos máquinas interiores (splits) y una máquina exterior</span> 
+                    <span style="display: block;font-size: 110%;"><span style="font-weight: bold;">B) 2 unidades 1x1:</span> 2 máquinas interiores y 2 máquinas exteriores</span>
+                    <span style="display: block;font-size: 110%;"><span style="font-weight: bold;">C) Conductos:</span> las máquinas interiores no se ven</span>
+                </p>
+                <mat-radio-group formControlName="tipo_instalacion">
+                    <mat-radio-button value="Multisplit 2x1"
+                        (click)="tipoInstalacionForm.controls.tipo_instalacion.setValue('Multisplit 2x1');limpiarErroresRadio(tipoInstalacionForm);"><span>Multisplit
+                            2x1</span></mat-radio-button>
+                    <mat-radio-button value="2 unidades 1x1"
+                        (click)="tipoInstalacionForm.controls.tipo_instalacion.setValue('2 unidades 1x1');limpiarErroresRadio(tipoInstalacionForm);"><span>2
+                            unidades 2x1</span></mat-radio-button>
+                    <mat-radio-button value="Por conductos"
+                        (click)="tipoInstalacionForm.controls.tipo_instalacion.setValue('Por conductos');limpiarErroresRadio(tipoInstalacionForm);"><span>Por
+                            conductos</span></mat-radio-button>
+                    <mat-radio-button value="No sabe"
+                        (click)="tipoInstalacionForm.controls.tipo_instalacion.setValue('No sabe');limpiarErroresRadio(tipoInstalacionForm);"><span>Lo
+                            desconozco</span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_tipo_instalacion_required"
+                    style="margin-left: 0px; margin-top: 15px; text-align: center;" class="error"><img
+                        src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una
+                    opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button (click)="validarForm(tipoInstalacionForm); sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+    }
+    <mat-step [stepControl]="espacioMejorarForm">
+        <form [formGroup]="espacioMejorarForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿Qué espacio quieres mejorar?</h2>
+                <div style="margin: 10px;">
+                    <img src="../assets/img/espacio.png" width="100%" alt="foto">
+                </div>
+                <mat-radio-group formControlName="espacio_mejorar">
+                    <mat-radio-button value="Dormitorio"
+                        (click)="espacioMejorarForm.controls.espacio_mejorar.setValue('Dormitorio');limpiarErroresRadio(espacioMejorarForm);"><span>Dormitorio</span></mat-radio-button>
+                    <mat-radio-button value="Salón/Comedor"
+                        (click)="espacioMejorarForm.controls.espacio_mejorar.setValue('Salón/Comedor');limpiarErroresRadio(espacioMejorarForm);"><span>Salón/Comedor</span></mat-radio-button>
+                    <mat-radio-button value="Despacho"
+                        (click)="espacioMejorarForm.controls.espacio_mejorar.setValue('Despacho');limpiarErroresRadio(espacioMejorarForm);"><span>Despacho</span></mat-radio-button>
+                    <mat-radio-button value="Cocina"
+                        (click)="espacioMejorarForm.controls.espacio_mejorar.setValue('Cocina');limpiarErroresRadio(espacioMejorarForm);"><span>Cocinas</span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_espacio_mejorar_required"
+                    style="margin-left: 0px; margin-top: 15px; text-align: center;" class="error"><img
+                        src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button mat-button matStepperNext (click)="validarForm(espacioMejorarForm); sumarPaso()"><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="superficieForm">
+        <form [formGroup]="superficieForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿Qué superficie tiene tu
+                    1er espacio?</h2>
+                <div style="margin: 10px;">
+                    <img src="../assets/img/superficie.png" width="100%" alt="foto">
+                </div>
+                <mat-radio-group formControlName="superficie">
+                    <mat-radio-button value="0-15"
+                        (click)="superficieForm.controls.superficie.setValue('0-15');limpiarErroresRadio(superficieForm);"><span>Hasta
+                            15 m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="15-20"
+                        (click)="superficieForm.controls.superficie.setValue('15-20');limpiarErroresRadio(superficieForm);"><span>15-20
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="20-25"
+                        (click)="superficieForm.controls.superficie.setValue('20-25');limpiarErroresRadio(superficieForm);"><span>20-25
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="25-30"
+                        (click)="superficieForm.controls.superficie.setValue('25-30');limpiarErroresRadio(superficieForm);"><span>25-30
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="30-35"
+                        (click)="superficieForm.controls.superficie.setValue('30-35');limpiarErroresRadio(superficieForm);"><span>30-35
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="35+"
+                        (click)="superficieForm.controls.superficie.setValue('35+');limpiarErroresRadio(superficieForm);"><span>Más
+                            de 35 m<sup>2</sup></span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_superficie_required" style="margin-left: 0px; margin-top: 15px; text-align: center;"
+                    class="error"><img src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una
+                    opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button (click)="validarForm(superficieForm);sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="superficieForm">
+        <form [formGroup]="superficieForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿Qué superficie tiene tu
+                    1er espacio?</h2>
+                <div style="margin: 10px;">
+                    <img src="../assets/img/superficie.png" width="100%" alt="foto">
+                </div>
+                <mat-radio-group formControlName="superficie">
+                    <mat-radio-button value="0-15"
+                        (click)="superficieForm.controls.superficie.setValue('0-15');limpiarErroresRadio(superficieForm);"><span>Hasta
+                            15 m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="15-20"
+                        (click)="superficieForm.controls.superficie.setValue('15-20');limpiarErroresRadio(superficieForm);"><span>15-20
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="20-25"
+                        (click)="superficieForm.controls.superficie.setValue('20-25');limpiarErroresRadio(superficieForm);"><span>20-25
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="25-30"
+                        (click)="superficieForm.controls.superficie.setValue('25-30');limpiarErroresRadio(superficieForm);"><span>25-30
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="30-35"
+                        (click)="superficieForm.controls.superficie.setValue('30-35');limpiarErroresRadio(superficieForm);"><span>30-35
+                            m<sup>2</sup></span></mat-radio-button>
+                    <mat-radio-button value="35+"
+                        (click)="superficieForm.controls.superficie.setValue('35+');limpiarErroresRadio(superficieForm);"><span>Más
+                            de 35 m<sup>2</sup></span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_superficie_required" style="margin-left: 0px; margin-top: 15px; text-align: center;"
+                    class="error"><img src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una
+                    opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button (click)="validarForm(superficieForm); sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+
+    @if(this.tipoViviendaForm.value.tipo_vivienda === 'Piso') {
+    <mat-step [stepControl]="plantaForm">
+        <form [formGroup]="plantaForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿En que planta está?</h2>
+                <div style="margin: 10px;">
+                    <img src="../assets/img/planta.png" width="100%" alt="foto">
+                </div>
+                <mat-radio-group formControlName="planta">
+                    <mat-radio-button value="Planta Baja"
+                        (click)="plantaForm.controls.planta.setValue('Planta Baja');limpiarErroresRadio(plantaForm);"><span>Planta
+                            Baja</span></mat-radio-button>
+                    <mat-radio-button value="Entreplanta"
+                        (click)="plantaForm.controls.planta.setValue('Entreplanta');limpiarErroresRadio(plantaForm);"><span>Éntreplanta</span></mat-radio-button>
+                    <mat-radio-button value="Atico"
+                        (click)="plantaForm.controls.planta.setValue('Atico');limpiarErroresRadio(plantaForm);"><span>Ático</span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_planta_required" style="margin-left: 0px; margin-top: 15px; text-align: center;"
+                    class="error"><img src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una
+                    opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button (click)="validarForm(plantaForm); sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+    }
+
+    <mat-step [stepControl]="compartenFachadaForm">
+        <form [formGroup]="compartenFachadaForm">
+            <div class="contenedor">
+                <h2 style="margin-top: 30px;margin-bottom: 30px;">{{pasoActual}}.-¿Las estancias comparten fachada?</h2>
+                <p style="margin: 30px;">Es decir, si por ejemplo quieres climatizar el salón y el dormitorio,
+                    ¿están las dos estancias una junto a la otra
+                    y la ventana de cada estancia en el mismo lado?
+                    O, ¿están una encima de la otra?</p>
+                <div style="display: inline-flex;">
+                    <div style="margin: 5px;">
+                        <img src="../assets/img/fachada2.png" width="100%" alt="icon">
+                    </div>
+                    <div style="margin: 5px;">
+                        <img src="../assets/img/fachada1.png" width="100%" alt="foto">
+                    </div>
+                </div>
+                <mat-radio-group formControlName="comparten_fachada"
+                    (change)="limpiarErroresRadio(compartenFachadaForm)">
+                    <mat-radio-button value="Si"
+                        (click)="compartenFachadaForm.controls.comparten_fachada.setValue('Si');limpiarErroresRadio(compartenFachadaForm);"><span>Si</span></mat-radio-button>
+                    <mat-radio-button value="No"
+                        (click)="compartenFachadaForm.controls.comparten_fachada.setValue('No');limpiarErroresRadio(compartenFachadaForm);"><span>No</span></mat-radio-button>
+                    <mat-radio-button value="No sabe"
+                        (click)="compartenFachadaForm.controls.comparten_fachada.setValue('No sabe');limpiarErroresRadio(compartenFachadaForm);"><span>No
+                            lo sé</span></mat-radio-button>
+                </mat-radio-group>
+                <span id="error_comparten_fachada_required"
+                    style="margin-left: 0px; margin-top: 15px; text-align: center;" class="error"><img
+                        src="./../../assets/img/advertencia.png" alt="alerta"> Seleccione una
+                    opción</span>
+                <div class="button">
+                    <button mat-button matStepperPrevious (click)="restarPaso()"><img
+                            src="/assets/img/icons8-flecha-arriba-24.png" alt="icon"></button>
+                    <button (click)="validarForm(compartenFachadaForm); sumarPaso()" mat-button matStepperNext><img
+                            src="/assets/img/icons8-flecha-24.png" alt="icon"></button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+    }
+
+
+
+
+
+
+    <mat-step>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious (click)="restarPaso()">Back</button>
+            <button mat-button (click)="stepper.reset(); pasoActual = 1">Reset</button>
+        </div>
+    </mat-step>
+</mat-stepper>

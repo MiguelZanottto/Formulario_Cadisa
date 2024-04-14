@@ -1,1 +1,61 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body {  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-step-icon{   /* Oculta el icono del paso*/
+    display: none;
+}
+html {                          /*Oculta la linea vertical*/
+    --mat-stepper-line-color: transparent; 
+}
+
+h2{
+    color: black;
+}
+
+
+.mat-step-header {              /* Evita el poder clickear la cabecera*/
+    pointer-events: none;          
+    cursor: default; 
+}
+
+.mat-step-header:focus {   /* Le quita el foco a la cabecera seleccionada*/
+    outline: none;
+    box-shadow: none;
+}
+
+.mat-step-header:not(.mat-step-header-selected) {  /* Oculta los otros pasos no seleccionados*/
+    display: none;
+}
+
+.mat-vertical-content-container {
+    margin-left: 0 !important;
+}
+
+html {
+    --mat-stepper-header-focus-state-layer-color: transparent; /* Le quita el color al header seleccionado*/
+    background-color: rgb(54, 139, 184); 
+}
+
+.mat-vertical-stepper-content {
+    height: 100vh; /* Establece la altura del contenido del stepper al 100% del alto de la ventana */
+    align-content: center;
+}
+
+.mat-mdc-radio-button.mat-accent {
+    --mdc-radio-selected-icon-color: rgb(255, 77, 0);
+    --mdc-radio-selected-focus-icon-color: rgb(255, 77, 0);
+    --mdc-radio-selected-hover-icon-color: rgb(255, 77, 0);
+    --mat-radio-ripple-color: rgb(255, 77, 0);
+}
+
+.mdc-radio__outer-circle {
+    background-color: #f5f5f5; 
+  }
+  
+  .mat-mdc-radio-button.mat-accent {
+    --mdc-radio-unselected-icon-color: rgb(159, 159, 47);
+    --mdc-radio-unselected-hover-icon-color: rgb(159, 159, 47);
+}
+
