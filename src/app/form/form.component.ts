@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatButtonModule} from '@angular/material/button';
 import {MatRadioModule} from '@angular/material/radio';
+import {ProductService} from "../services/ProductService";
+import {HttpClientModule} from "@angular/common/http";
+import {CandidateService} from "../services/CandidateService";
+import {BudgetService} from "../services/BudgetService";
 
 
 @Component({
@@ -16,11 +20,12 @@ import {MatRadioModule} from '@angular/material/radio';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatRadioModule],
+    MatRadioModule,
+  HttpClientModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
-export class FormComponent {
+export class FormComponent implements OnInit{
   pasoActual = 1;
 
   sumarPaso() {
@@ -100,7 +105,7 @@ export class FormComponent {
         if (formulario.valid) {
          const elemento = document.getElementById('error_' + controlName + "_required");
             elemento!.style.display = "none";
-      } 
+      }
     });
   }
 
@@ -112,6 +117,20 @@ export class FormComponent {
 }
 
   isLinear = false;
- 
-  constructor(private _formBuilder: FormBuilder) {}
+
+  constructor(private _formBuilder: FormBuilder, private _productService: ProductService, private _candidateService: CandidateService, private _budgetService: BudgetService) {}
+
+  ngOnInit(): void {
+    this._productService.getAllProducts().subscribe(data => {
+      console.log(data);
+    })
+
+    this._candidateService.getAllCandidates().subscribe(data => {
+      console.log(data);
+    })
+
+    this._budgetService.getAllBudgets().subscribe(data => {
+      console.log(data);
+    })
+  }
 }
